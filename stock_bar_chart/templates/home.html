@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+{% block content %}
+<div id="cover" onload="display();">
+    <form method="post" action="get_data" onsubmit="searchFunction()">
+        {% csrf_token %}
+        <div class="tb">
+            <div class="td"><input name="name" id="textboxSearch" type="text" placeholder="Search" required></div>
+            <div class="td" id="s-cover">
+                <button type="submit">
+                    <div id="s-circle"></div>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="lastResults" style="border:1px solid green; width:400px; height:300px; overflow-y:scroll;">
+    <ul id="searchHistory"></ul>
+</div>
+<script type="text/javascript">
+var recentSearches = []; // create an empty javascript array
+
+//this function is called using the search buttons "onclick"
+function searchFunction(data) {
+
+    recentSearches.push($('#textboxSearch').val()); // This line puts the value from the text box in an array
+    $('#textboxSearch').val(""); //  clear the text box after search
+    $('#searchHistory').text(""); //clear the seach history window then repopulate with the new array
+
+    // the function below loops through the array and adds each item in the array
+    // to the span element within the Search history arear
+    $.each(recentSearches, function (index, value) {
+        $('#searchHistory').append("<li class='historyItem'  onclick='addtotextbox("+index+")'>" + value + '</li>');
+    });
+}
+
+function addtotextbox(id)
+{
+$('#textboxSearch').val(recentSearches[id]);
+}
+</script>
+{% endblock %}

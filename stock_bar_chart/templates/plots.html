@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+{% block content %}
+<button id="display_btn" onclick="change_plot()" class="bn632-hover bn26">Show Candlestick chart</button>
+<div id="plot1" style="display: block; width: 100%">
+    <h2 align="center"> OHLC Bar chart </h2>
+    {% autoescape off %}
+    {{ plot1}}
+    {% endautoescape %}
+</div>
+<div id="plot2" style="display: none; width: 100%">
+    <h2 align="center"> Candlestick chart </h2>
+    {% autoescape off %}
+    {{ plot2 }}
+    {% endautoescape %}
+</div>
+
+<div>
+    <button class="bn632-hover bn26" onclick="fn();">More Info</button><br><br>
+</div>
+<div id="info" style="display: none">
+    <p>Symbol: {{info.symbol}}</p>
+    <p>Latest Price: {{info.latestPrice}}</p>
+    <p>previousClose: {{info.previousClose}}</p>
+    <p>PE ratio: {{info.peRatio}}</p>
+    <p>52 week High: {{info.week52High}}</p>
+    <p>52 week Low: {{info.week52Low}}</p>
+</div>
+<script type="text/javascript">
+    function change_plot(){
+        let p1 = document.getElementById('plot1');
+        let p2 = document.getElementById('plot2');
+        if(p1.style.display==='none'){
+            p1.style.display='block';
+            p2.style.display='none';
+            document.getElementById('display_btn').innerHTML="Show Candlestick chart";
+        }
+        else {
+            p2.style.display='block';
+            p1.style.display='none';
+            document.getElementById('display_btn').innerHTML="Show OHLC chart";
+        }
+    }
+    function fn(){
+        let a=document.getElementById('info');
+        if(a.style.display==='none')
+            a.style.display='block';
+        else
+            a.style.display='none';
+    }
+</script>
+{% endblock %}
